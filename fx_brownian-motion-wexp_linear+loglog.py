@@ -131,7 +131,7 @@ def synsrv_trace_figure(fit=True):
     fig.tight_layout()
 
     fname = os.path.splitext(os.path.basename(__file__))[0]
-    fig.savefig("{}_loglog.png".format(fname), dpi=300, bbox_inches='tight')
+    fig.savefig("{}.pdf".format(fname), dpi=300, bbox_inches='tight')
 
 
     

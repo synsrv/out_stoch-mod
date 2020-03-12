@@ -55,7 +55,8 @@ def traces_figure():
     fig.tight_layout()
 
     fname = os.path.splitext(os.path.basename(__file__))[0]
-    fig.savefig("{}".format(fname), dpi=300, bbox_inches='tight')
+    fig.savefig("{}".format(fname)+'.pdf', dpi=300,
+                bbox_inches='tight')
 
 
     
