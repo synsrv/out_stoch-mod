@@ -35,22 +35,31 @@ def traces_figure():
     with open(dpath+'/xt.p', 'rb') as pfile:
         xt=np.array(pickle.load(pfile))
 
-    for i in range(10):
-        ax.plot(xt[:,i])
+    for i in list(range(8))+[10]:
+        ax.plot(xt[:,i], color='grey', alpha=0.6)
+    for i in [9]: #1, #3, #6
+        ax.plot(xt[:,i], color='red')
+        ax.plot(np.arange(0,1000)[xt[:,i]==0.1],
+                0.1*np.zeros(1000)[xt[:,i]==0.1],
+                'x', color='black', zorder=100,
+                markersize=3., markeredgewidth=0.6,
+                label='process renewed')
 
+        
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
     ax.yaxis.set_ticks_position('left')
     ax.xaxis.set_ticks_position('bottom')
 
-    # ax.set_xlim(left=-3, right=100)
+    ax.set_xlim(left=-25, right=1025)
     # ax.set_ylim(bottom=5*10**-3)
 
-    # ax.set_xlabel('simulation steps')
+    ax.set_xlabel('simulation steps')
     ax.set_ylabel('spine size')   
 
-    # ax.legend(frameon=False, loc='lower left',
-    #               prop={'size': 9})
+    ax.legend(frameon=False, loc='center right',
+              prop={'size': 8}, handletextpad=-0.1,
+              bbox_to_anchor=(0.25,0.85))
     
     fig.tight_layout()
 
