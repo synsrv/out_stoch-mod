@@ -110,7 +110,7 @@ def synsrv_trace_figure(fit=True):
     ax.set_yscale('log')
 
     fname = os.path.splitext(os.path.basename(__file__))[0]
-    fig.savefig("{}_loglog.png".format(fname), dpi=300, bbox_inches='tight')
+    fig.savefig("{}_loglog.pdf".format(fname), dpi=300, bbox_inches='tight')
 
     ax.set_xscale('linear')
     ax.set_yscale('linear')
@@ -120,7 +120,7 @@ def synsrv_trace_figure(fit=True):
     ax.set_xlim(left=-3, right=100)
     
     fname = os.path.splitext(os.path.basename(__file__))[0]
-    fig.savefig("{}_linear.png".format(fname), dpi=300, bbox_inches='tight')
+    fig.savefig("{}_linear.pdf".format(fname), dpi=300, bbox_inches='tight')
 
 
     
