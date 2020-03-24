@@ -58,8 +58,8 @@ def traces_figure():
     ax.set_ylabel('spine size')   
 
     ax.legend(frameon=False, loc='center right',
-              prop={'size': 8}, handletextpad=-0.1,
-              bbox_to_anchor=(0.25,0.85))
+              prop={'size': 8.5}, handletextpad=-0.12,
+              bbox_to_anchor=(0.27,0.85))
     
     fig.tight_layout()
 
