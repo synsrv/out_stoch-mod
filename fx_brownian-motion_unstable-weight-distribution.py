@@ -31,7 +31,7 @@ def pdf_figure(enlist,svfix):
     for x,y in itertools.product(range(ax_lines),range(ax_cols)):
         axs['%d,%d'%(x+1,y+1)] = pl.subplot2grid((ax_lines, ax_cols), (x, y))
 
-    fig.set_size_inches(1920/s*ax_lines/4,1080/s*ax_cols/3)
+    fig.set_size_inches(1920/s*ax_lines/4*1.85,1080/s*ax_cols/3/1.8)
 
     data_dirs = sorted(['data/brownian-motion/200323_180732_brownian-motion_get-weight-distribution-at-differ-Nstep-vals/data/'+pth for pth in next(os.walk("data/brownian-motion/200323_180732_brownian-motion_get-weight-distribution-at-differ-Nstep-vals/data/"))[1]])
 
@@ -104,7 +104,7 @@ def pdf_figure(enlist,svfix):
     axs['1,1'].set_position([box.x0, box.y0, box.width * 0.8, box.height])
 
     axs['1,1'].legend(frameon=False, prop={'size': 10}, loc='center left',
-              labelspacing=1.15, borderpad=1.25, bbox_to_anchor=(1, 0.5))
+              labelspacing=0.9, borderpad=1.25, bbox_to_anchor=(1, 0.5))
 
     # axs['1,1'].set_xlim(-0.15, 29)
     # axs['1,1'].set_ylim(-0.15, 3.1)
