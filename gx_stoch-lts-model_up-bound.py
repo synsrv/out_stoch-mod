@@ -25,12 +25,12 @@ from scipy import optimize
 def bm_upbound_figure():
 
     fig, ax = pl.subplots()
-    fig.set_size_inches(6./2,1.2)
+    fig.set_size_inches(6./2,1.5)
 
     bin_w = 1
 
     dpath = "./data/brownian-motion/" +\
-            "200325_152759_brownian-motion_traces-with-up-cap/" +\
+            "200326_145800_brownian-motion_traces-with-up-cap/" +\
             "data/0000"
 
     with open(dpath+'/namespace.p', 'rb') as pfile:
@@ -39,30 +39,46 @@ def bm_upbound_figure():
     with open(dpath+'/xt.p', 'rb') as pfile:
         xt=np.array(pickle.load(pfile))
 
+    with open(dpath+'/lts.p', 'rb') as pfile:
+        lts=np.array(pickle.load(pfile))
 
-    xlow, xhigh = 100, 850
 
+    idx = 15
+    xlow, xhigh = 15, nsp['Nsteps']-1
 
-    # i, k = 2,0
-    # while k<nsp["Nsteps"]:
-    #     if xt[i,k]>0:
-    #         break
-    #     else:
-    #         k+=1
-    # z=k
-    # low=k
-    # while low<nsp["Nsteps"]:
-    #     if xt[i,low]>0:
-    #         low+=1
-    #     else:
-    #         break
+    
 
-    # xva = range(k-(nsp["Nsteps"]-900)+22,k)
-    # yva = xt[11][900:nsp["Nsteps"]][6:-16]
+        
+    # xlow, xhigh = 100, 850
 
-    ax.plot(range(xlow, xhigh), xt[xlow:xhigh,12])
+    lts_select = lts[lts[:, -1]==idx]
+
+    sep = np.where(xt[:,idx]==nsp['X_0'])[0]
+
+    # for x in sep:
+    #     ax.axvline(x)
+    
+        
+    print(lts_select)
+
+    # ax.plot(range(xlow, xhigh), xt[xlow:xhigh,idx])
+
+    ax.plot(range(xlow, sep[0]), xt[xlow:sep[0],idx], color='grey')
+    ax.plot(range(sep[0], sep[1]), xt[sep[0]:sep[1],idx], color='grey')
+    ax.plot(range(sep[1], sep[2]), xt[sep[1]:sep[2],idx], color='grey')
+
+    # I'm skipping a few values here purely for visualization purposes
+    # exact values are not important here as this grophic only explains
+    # the model and does not present results
+    ax.plot(range(sep[2]+3, sep[3]), xt[sep[2]+3:sep[3],idx], color='black')
+
+    # skipping some values here as well, same reasoning as above
+    ax.plot(range(sep[3]+3, xhigh), xt[sep[3]+3:xhigh,idx], color='grey')
+    
 
     ax.plot([xlow,xhigh],[nsp['up_cap']]*2, color='black')
+
+    ax.plot([xlow,xhigh],[nsp['up_cap']*1.4]*2, ':', color='black')
 
     # ax.plot(xva, yva, 'grey')
 
@@ -105,19 +121,20 @@ def bm_upbound_figure():
 
 
     # ax.set_xlim(xlow, nsp["Nsteps"]-125*1.05)
-    # ax.set_ylim(bottom=-0.0875)
+    ax.set_ylim(bottom=-0.0875)
 
 
     # pl.xticks([z-(nsp["Nsteps"]-900)+22,z,k, nsp["Nsteps"]-125], ['$t=0$', '','', '$t=t_{\mathrm{max}}$'])
     pl.xticks([xlow, xlow+100, xlow+200, xhigh],
               ['$t=0$', '', '', '$t=t_{\mathrm{max}}$'])
     
-    # pl.yticks([nsp["X_0"]], ["$X_{\mathrm{insert}}$"])
+    pl.yticks([nsp["X_0"]], ["$X_{\mathrm{insert}}$"])
 
     ax2 = ax.twinx()
     ax2.set_ylim(ax.get_ylim())
     # # ax
-    # pl.yticks([0, xt[i][l+nsp["Nsteps"]-k]], ["$X_\mathrm{prune}$", "$X(t_{\mathrm{max}})$"])
+    pl.yticks([nsp["X_prune"], xt[xhigh,idx]],
+              ["$X_\mathrm{prune}$", "$X(t_{\mathrm{max}})$"])
 
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
