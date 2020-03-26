@@ -39,18 +39,18 @@ def bm_upbound_figure():
 
 
     idx = 15
-    xlow, xhigh = 15, nsp['Nsteps']-1
-    # xlow, xhigh = 100, 850
-
+    # xlow, xhigh = 15, nsp['Nsteps']-1
+    xlow, xhigh = 5, 925
+    up_cap_high = nsp['up_cap']*1.4
 
     sep = np.where(xt[:,idx]==nsp['X_0'])[0]
     # for x in sep:
     #     ax.axvline(x)
 
-    ax.plot(range(xlow, sep[0]), xt[xlow:sep[0],idx],
-            color='grey', alpha=0.7)
-    ax.plot(range(sep[0], sep[1]), xt[sep[0]:sep[1],idx],
-            color='grey', alpha=0.7)
+    # ax.plot(range(xlow, sep[0]), xt[xlow:sep[0],idx],
+    #         color='grey', alpha=0.7)
+    # ax.plot(range(sep[0], sep[1]), xt[sep[0]:sep[1],idx],
+    #         color='grey', alpha=0.7)
     ax.plot(range(sep[1], sep[2]), xt[sep[1]:sep[2],idx],
             color='grey', alpha=0.7)
 
@@ -67,60 +67,20 @@ def bm_upbound_figure():
     # upper boundaries    
     ax.plot([xlow,xhigh],[nsp['up_cap']]*2, color='black')
 
-    ax.plot([xlow,xhigh],[nsp['up_cap']*1.4]*2, ':', color='black')
-
-    
+    ax.plot([xlow,xhigh],[up_cap_high]*2, '--', color='black')
 
 
-
-
-
-    # yvals = xt[i][k:low]
-
-    # ax.plot(range(k,low),xt[i][k:low], 'black')
-
-
-    # ax.plot([xlow,k-(nsp["Nsteps"]-900)+22],[nsp["X_0"]]*2, 'black', linestyle=':')
-
-    # while k<nsp["Nsteps"]:
-    #     if xt[i,k]>0:
-    #         k+=1
-    #     else:
-    #         break
-
-    # i, l = 16,0
-    # while l<nsp["Nsteps"]:
-    #     if xt[i,l]>0:
-    #         break
-    #     else:
-    #         l+=1
-
-    # ax.plot(range(k,nsp["Nsteps"]-125),xt[i][l:l+nsp["Nsteps"]-k-125], 'grey', alpha=0.7)
-
-    # ax.plot([k, nsp["Nsteps"]-125*1.05],[0]*2, 'black', linestyle=':')
-
-
-    # ax.plot([xlow, nsp["Nsteps"]-125*1.05],[upper_bound]*2, 'black', linestyle=':')
-    # ax.plot([xlow, nsp["Nsteps"]-125*1.05],[upper_bound_2]*2, 'black', linestyle=':')
-
-
-    # print(len(list(range(k,nsp["Nsteps"]))))
-    # print(len(xt[i][l:l+nsp["Nsteps"]-k]))
-
-
-    # ax.set_xlim(xlow, nsp["Nsteps"]-125*1.05)
+    ax.set_xlim(left=xlow-15, right=xhigh)
     ax.set_ylim(bottom=-0.0875)
-
-
-    # pl.xticks([z-(nsp["Nsteps"]-900)+22,z,k, nsp["Nsteps"]-125], ['$t=0$', '','', '$t=t_{\mathrm{max}}$'])
-    pl.xticks([xlow, xlow+100, xlow+200, xhigh],
+   
+    pl.xticks([xlow, sep[2], sep[3], xhigh],
               ['$t=0$', '', '', '$t=t_{\mathrm{max}}$'])
     
-    pl.yticks([nsp["X_0"]], ["$X_{\mathrm{insert}}$"])
+    pl.yticks([nsp["X_0"], nsp["up_cap"], up_cap_high],
+              ["$X_{\mathrm{insert}}$", "$\Theta_1$", "$\Theta_2$"])
 
     ax2 = ax.twinx()
     ax2.set_ylim(ax.get_ylim())
-    # # ax
     pl.yticks([nsp["X_prune"], xt[xhigh,idx]],
               ["$X_\mathrm{prune}$", "$X(t_{\mathrm{max}})$"])
 
@@ -152,11 +112,6 @@ def bm_upbound_figure():
              length_includes_head=True)
 
     ax.text(mid, -0.38, '$T$', fontdict={'ha': 'center'}, clip_on=False)
-
-
-    # ax.arrow(z,-0.35, k-z, 0., clip_on=False, shape='full',
-    #          head_width=0.05, head_length=(k-z)*0.05,
-    #          head_starts_at_zero=False, color='k')
 
 
     fname = os.path.splitext(os.path.basename(__file__))[0]
