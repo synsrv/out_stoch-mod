@@ -41,7 +41,9 @@ def bm_upbound_figure():
     idx = 15
     # xlow, xhigh = 15, nsp['Nsteps']-1
     xlow, xhigh = 5, 925
-    up_cap_high = nsp['up_cap']*1.4
+    up_cap_high = nsp['up_cap']*1.25
+
+    xlimleft = xlow-60
 
     sep = np.where(xt[:,idx]==nsp['X_0'])[0]
     # for x in sep:
@@ -66,11 +68,15 @@ def bm_upbound_figure():
 
     # upper boundaries    
     ax.plot([xlow,xhigh],[nsp['up_cap']]*2, color='black')
-
     ax.plot([xlow,xhigh],[up_cap_high]*2, '--', color='black')
 
 
-    ax.set_xlim(left=xlow-15, right=xhigh)
+    # X_insert and X_prune level indicators
+    ax.plot([xlimleft,xlow],[nsp['X_0']]*2, ':', color='black')
+    ax.plot([sep[3],xhigh],[nsp['X_prune']]*2, ':', color='black')
+
+
+    ax.set_xlim(left=xlimleft, right=xhigh)
     ax.set_ylim(bottom=-0.0875)
    
     pl.xticks([xlow, sep[2], sep[3], xhigh],
